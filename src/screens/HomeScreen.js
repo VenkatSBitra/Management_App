@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Dimensions, ScrollView } from 'react-native';
+import { View, Dimensions, ScrollView, FlatList } from 'react-native';
 import { Button, Divider, List } from 'react-native-paper';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -28,18 +28,16 @@ function HomeScreen({ navigation }) {
         Add TODO
       </Button>
       <Divider />
-      <ScrollView>
-        <List.Section>
-          <List.Subheader>{"TODO List"}</List.Subheader>
-          {todos.map((todo, index) => {
-            return <List.Item 
-              key={index}
-              title={todo.title}
-              description={todo.description + "\n" + todo.date.toLocaleString('en-IN')}
-            />
-          })}
-        </List.Section>
-      </ScrollView>
+      <FlatList 
+        data={todos}
+        keyExtractor={({index}) => index}
+        renderItem={({item, index}) => <List.Item 
+          key={index}
+          title={item.title}
+          description={item.date.toLocaleString('en-IN') + "\n" + item.description}
+          onPress={() => navigation.navigate('TodoDetail', {todo: item})}
+        />}
+      />
     </View>
   )
 }

@@ -27,7 +27,7 @@ const saveTodo = async (value) => {
   console.log("OK")
   try {
     if (todos !== null) {
-      await AsyncStorage.setItem('todos', JSON.stringify([...todos, value]))
+      await AsyncStorage.setItem('todos', JSON.stringify([...todos, value].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())))
     } else {
       await AsyncStorage.setItem('todos', JSON.stringify([value]))
     }
